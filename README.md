@@ -8,7 +8,7 @@ Aditi Shrivastava
 
 ## Introduction
 
-In this exploration, I comprehensively analyze how wildfire smoke, an increasingly pervasive environmental factor, influences the efficiency and output of the agricultural sector in the city of Rapid City, South Dakota. 
+In this exploration, I comprehensively analyze how wildfire smoke, an increasingly pervasive environmental factor, influences the efficiency and output of the agricultural sector in the city of Rapid City, South Dakota. Specifically, I forecast the Agricultural TFP in Rapid City to the year 2050 based on a number of wildfire smoke related factors, and find that the agriculture sector will fail to meet productivity expectations in the year 2050 if wildfire smoke continues to increase at the same pace. 
 
 The [Agricultural Total Factor Productivity (TFP)](CITE) represents a critical metric in assessing the overall efficiency of agricultural production, encompassing various inputs such as labor, capital, and technology. In the context of this study, I focus on understanding how fluctuations in TFP, induced by exposure to wildfire smoke, can impact the agricultural landscape of Rapid City. Wildfire smoke, with its complex composition of particulate matter and chemical compounds, poses potential threats to crop health, soil quality, and the overall productivity of the agricultural sector.
 
