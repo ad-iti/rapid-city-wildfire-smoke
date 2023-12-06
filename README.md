@@ -10,25 +10,21 @@ Aditi Shrivastava
 
 In this exploration, I comprehensively analyze how wildfire smoke, an increasingly pervasive environmental factor, influences the efficiency and output of the agricultural sector in the city of Rapid City, South Dakota. 
 
-The Agricultural Total Factor Productivity (TFP) represents a critical metric in assessing the overall efficiency of agricultural production, encompassing various inputs such as labor, capital, and technology. In the context of this study, I focus on understanding how fluctuations in TFP, induced by exposure to wildfire smoke, can impact the agricultural landscape of Rapid City. Wildfire smoke, with its complex composition of particulate matter and chemical compounds, poses potential threats to crop health, soil quality, and the overall productivity of the agricultural sector.
+The [Agricultural Total Factor Productivity (TFP)](CITE) represents a critical metric in assessing the overall efficiency of agricultural production, encompassing various inputs such as labor, capital, and technology. In the context of this study, I focus on understanding how fluctuations in TFP, induced by exposure to wildfire smoke, can impact the agricultural landscape of Rapid City. Wildfire smoke, with its complex composition of particulate matter and chemical compounds, poses potential threats to crop health, soil quality, and the overall productivity of the agricultural sector.
 
-A diminished [Agricultural Total Factor Productivity](CITE) can have far-reaching consequences for Rapid City. The city's economic landscape is intricately tied to the success of its agricultural endeavors. A lowered TFP could lead to reduced yields, economic downturns for local farmers, and potential food supply chain disruptions. Moreover, the broader community may experience negative repercussions, including increased unemployment and a strain on resources. Understanding and quantifying these effects is pivotal for creating informed strategies to enhance the resilience of Rapid City's agricultural sector in the face of environmental challenges such as wildfire smoke. This repository contains the code, data, and documentation for all explorations and conclusions made in this project.
+A diminished AgTFP can have far-reaching consequences for Rapid City. The city's economic landscape is intricately tied to the success of its agricultural endeavors. A lowered TFP could lead to reduced yields, economic downturns for local farmers, and potential food supply chain disruptions. Moreover, the broader community may experience negative repercussions, including increased unemployment and a strain on resources. Understanding and quantifying these effects is pivotal for creating informed strategies to enhance the resilience of Rapid City's agricultural sector in the face of environmental challenges such as wildfire smoke. This repository contains the code, data, and documentation for all explorations and conclusions made in this project.
 
 ## Outline
 
 To begin this exploration, we analyze the prevalence of wildfire smoke in Rapid City, South Dakota via several steps of data acquisition, cleaning, and formatting detailed in ```./code/USGS_data_acquisition.ipnyb```. The resulting final USGS wildfire dataset is too large to store in this repo, but a subset of it is stored as ```./data/final_USGS_data_subset.csv```. The data is primarily sourced from the [Combined wildland fire datasets for the United States and certain territories, 1800s-Present (combined wildland fire polygons)](https://www.sciencebase.gov/catalog/item/61aa537dd34eb622f699df81) dataset, which was collected and aggregated by the [US Geological Survey](https://www.usgs.gov/). The dataset is relatively well documented, fire polygons are available in ArcGIS and GeoJSON formats. For this exploration, we specifically rely upon the large .JSON formatted file, which can be found in the combined .ZIP file on the website.
 
-Next, we request data from the US Environmental Protection Agency (EPA) Air Quality Service (AQS) [API](https://aqs.epa.gov/aqsweb/documents/data_api.html), which is a historical API that provides data on the Air Quality Index (AQI) statistic. Information on how this statistic is calculate can be found [here](https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf). The US EPA was created in the early 1970's. The EPA reports that they only started broad based monitoring with standardized quality assurance procedures in the 1980's. Some [additional information on the Air Quality System can be found in the EPA FAQ](https://www.epa.gov/outdoor-air-quality-data/frequent-questions-about-airdata) on the system.
-
-We pull this data with the intention of comparing the previously computed smoke estimates for Rapid City to the AQI indices produced by the EPA on a year to year basis. Step by step process for the data requests are found in ```./code/EPA_data_acquisition.ipynb``` and the final EPA data is found in ```./data/final_EPA_data.csv```
+Next, we request data from the US Environmental Protection Agency (EPA) Air Quality Service (AQS) [API](https://aqs.epa.gov/aqsweb/documents/data_api.html), which is a historical API that provides data on the Air Quality Index (AQI) statistic. Information on how this statistic is calculate can be found [here](https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf). The US EPA was created in the early 1970's. The EPA reports that they only started broad based monitoring with standardized quality assurance procedures in the 1980's. Some [additional information on the Air Quality System can be found in the EPA FAQ](https://www.epa.gov/outdoor-air-quality-data/frequent-questions-about-airdata) on the system. We pull this data with the intention of comparing the previously computed smoke estimates for Rapid City to the AQI indices produced by the EPA on a year to year basis. Step by step process for the data requests are found in ```./code/EPA_data_acquisition.ipynb``` and the final EPA data is found in ```./data/final_EPA_data.csv```
 
 We then create a model to find a unique wildfire smoke estimate, a single number to represent the effect and impact of the fire smoke that affects Rapid City every year. While smoke impact should generally be considered the health, tourism, economic or other social problems that result from the smoke, we create the annual estimate of wildfire smoke using the following model:
 
 100*(Square miles burned)^2 / (Distance from Rapid City)
 
-Then, we use this estimate to develop a predictive model based on the fire data and smoke estimate for Rapid City, SD. The model, a polynomial regression of degree 2, is then used to predict smoke estimates for every year for the next 25 years (i.e., 2024-2049), and the resulting fit and the associated confidence interval are both explored. Detailed description and parameters of both the estimate and the predictive model can be found in ```./code/smoke_estimate_viz.ipnyb```. We will further consider other potential social and economic impacts of the wildfire smoke later in Part 2 of this project.
-
-Finally, we use all of the gathered data to illustrate some wildfire trends over time in Rapid City, South Dakota. These are detailed below, and code on how these visualization were produce can be found in ```./code/smoke_estimate_viz.ipynb```. The final outputs and their detailed descriptions can be found in ```./reflection.pdf```.
+Then, we use this estimate to develop a predictive model based on the fire data and smoke estimate for Rapid City, SD. The model, a polynomial regression of degree 2, is then used to predict smoke estimates for every year for the next 25 years (i.e., 2024-2049), and the resulting fit and the associated confidence interval are both explored. Detailed description and parameters of both the estimate and the predictive model can be found in ```./code/smoke_estimate_viz.ipnyb```. Finally, we use all of the gathered data to illustrate some wildfire trends over time in Rapid City, South Dakota. These are detailed below, and code on how these visualization were produce can be found in ```./code/smoke_estimate_viz.ipynb```. The final outputs and their detailed descriptions can be found in ```./reflection.pdf```. KEEP THIS FILE?????
 
 ## Files 
 
@@ -54,18 +50,24 @@ Finally, we use all of the gathered data to illustrate some wildfire trends over
 - This notebook details all code needed to produce ```data/final_EPA_data.csv```.
 - Note that AQI data is only available for Rapid City during and after the year 1985.
 
-```smoke_estimate_viz.ipnyb```
+```smoke_estimate_viz.ipynb```
 - This notebook creates a unique smoke estimate for each year, and employs a quadratic regression model to predeict the future smoke estimate up to the year 2049. We also perform a brief visual exploration with all our gathered data-- specifically, we produce:
 - a histogram showing the number of fires occurring every 50 mile distance from Rapid City
 - a time series graph of total acres burned per year for the fires occurring within 1250 miles of Rapid City
 - a time series graph containing the fire smoke estimate for Rapid City compared to the AQI estimate
 
-#### reflection.pdf
-This file contains snapshots of the produced visualizations, their descriptions, and a reflection on the collaborative aspects of this assignment.
+```agtfp_prediction.ipynb```
+- Blah bdkhskjh dskjfh dskjfh s
+- fhskjfhs
+- fhkwejfhewkjfhewf wekjfhewf ewfh ewkjfh doqwiurewhf bds vndvpfovehwiuf dwqbcds.
 
-## Special Considerations
+#### final_report.pdf
+This file contains fhiewuf ewufhwe feufhwe adqpodwefwb f cbsdhwfewuf we.
+
+## Special Considerations and Limitations
 - It takes ~1 hour to run all the notebooks in this repo and load all necessary data.
 - The EPA only has AQI data available for Rapid City, SD during and after the year 1985.
 - The predictive model (quadratic regression) produced in ```./code/smoke_estimate_viz.ipnyb``` is highly uncertain and likely not representative of the next 25 years.
 - Fire perimeter estimates are still a work in progress, and likely are not 100% accurate.
+- Add more fnerfierfr fref
 
