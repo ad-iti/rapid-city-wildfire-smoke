@@ -32,7 +32,7 @@ Then, we use this estimate to develop a predictive model based on the fire data 
 
 #### Extension
 
-The aforementioned general analysis serves as the basis for the agriculture industry-specific model that is produced in ```/code/4.agTFP_Model.ipnyb```. In this, we pull historical Agricultural TFP data in South Dakota to serve as training data for the predictive model from the [USDA](https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-u-s/), which also details how the statistic is calculated. This data is used in an ARIMA model to forecast the expected AgTFP till the year 2050. We then use the previously gathered PM2.5 and O3 data, as well as the previously gathered fire acreage and distance calculations, to create a [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) model to predict the actual AgTFP till the year 2050 in response to changes in the three predictive variables (AQI, fire size, fire distance). To do so, the three variables were extrapolated into the future based on their previous behavior to act as input to the model between years 2021-2050.
+The aforementioned general analysis serves as the basis for the agriculture industry-specific model that is produced in ```/code/4.agTFP_Model.ipnyb```. In this, we pull historical Agricultural TFP data in South Dakota to serve as training data for the predictive model from the [USDA](https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-u-s/), which also details how the statistic is calculated. This data is used in an ARIMA model to forecast the expected AgTFP till the year 2050. We then use the previously gathered AQI data, as well as the previously gathered fire acreage and distance calculations, to create a [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) model to predict the actual AgTFP till the year 2050 in response to changes in the three predictive variables (AQI, fire size, fire distance). To do so, the three variables were extrapolated into the future based on their previous behavior to act as input to the model between years 2021-2050.
 
 #### Hypotheses
 1. An increase in AQI should lead to a lower AgTFP based on the fact that it is calculated using the following pollutant levels, and is thereby harmful to agriculture and crops. 
@@ -57,7 +57,6 @@ The aforementioned general analysis serves as the basis for the agriculture indu
 
 ```final_EPA_data.csv```
 - We use the EPA AQI API to find monitoring stations near Rapid City, South Dakota, and then extract the average Air Quality Index for each station. The results are then averaged and stored to represent the AQI for each year.
-- We also extract the yearly average PM2.5 and O3 levels.
 - Note that AQI data is only available for Rapid City during and after the year 1985.
 
 ```agtfp_data.csv```
@@ -72,7 +71,7 @@ The aforementioned general analysis serves as the basis for the agriculture indu
 
 ```2.EPA_data_acquisition.ipynb```
 - This notebook details all code needed to produce ```/data/final_EPA_data.csv```.
-- Note that AQI, PM2.5, and O3 data is only available for Rapid City during and after the year 1985.
+- Note that AQI data is only available for Rapid City during and after the year 1985.
 
 ```3.smoke_estimate_viz.ipynb```
 - This notebook creates a unique smoke estimate for each year, and employs a quadratic regression model to predeict the future smoke estimate up to the year 2049. We also perform a brief visual exploration with all our gathered data-- specifically, we produce:
