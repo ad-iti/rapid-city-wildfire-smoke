@@ -82,7 +82,7 @@ This directory contains the necessary .PDF submissions for this course project.
 ```reflection.pdf```
 - Common analysis reflection. Contains all figures produced in ```3.smoke_estimate_viz.ipynb```.
 
-- ```final_report.pdf```
+```final_report.pdf```
 - Findings of this exploration. Results also detailed below.
 
 #### Results
