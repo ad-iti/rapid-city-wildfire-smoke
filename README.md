@@ -85,8 +85,8 @@ This directory contains the necessary .PDF submissions for this course project.
 ```final_report.pdf```
 - Findings of this exploration. Results also detailed below.
 
-#### Results
-
+## Results
+Blah blahdhbdaldh k bjhfdsb cdsjhpweid sdcbds osiwei cuewhc cnwcnd cdb ijweoeu. Copy from paper.
 
 ## Special Considerations and Limitations
 - It takes ~1 hour to run all the notebooks in this repo and load all necessary data.
