@@ -24,15 +24,15 @@ This repository contains the code, data, and documentation for all explorations 
 
 To begin this exploration, we analyze the prevalence of wildfire smoke in Rapid City, South Dakota via several steps of data acquisition, cleaning, and formatting detailed in ```./code/1.USGS_data_acquisition.ipnyb```. The resulting final USGS wildfire dataset is too large to store in this repo, but a subset of it is stored as ```./data/final_USGS_data_subset.csv```. The data is primarily sourced from the [Combined wildland fire datasets for the United States and certain territories, 1800s-Present (combined wildland fire polygons)](https://www.sciencebase.gov/catalog/item/61aa537dd34eb622f699df81) dataset, which was collected and aggregated by the [US Geological Survey](https://www.usgs.gov/). The dataset is relatively well documented, fire polygons are available in ArcGIS and GeoJSON formats. For this exploration, we specifically rely upon the large .JSON formatted file, which can be found in the combined .ZIP file on the website. The data is filtered to include only wildfires taking place during or after 1963, and within 1250 miles of Rapid City, South Dakota.
 
-Next, we request data from the US Environmental Protection Agency (EPA) Air Quality Service (AQS) [API](https://aqs.epa.gov/aqsweb/documents/data_api.html), which is a historical API that provides data on the Air Quality Index (AQI) statistic. Information on how this statistic is calculate can be found [here](https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf). The EPA reports that they only started broad based monitoring with standardized quality assurance procedures in the 1980's. Some [additional information on the Air Quality System can be found in the EPA FAQ](https://www.epa.gov/outdoor-air-quality-data/frequent-questions-about-airdata) on the system. We pull this data with the intention of comparing the previously computed smoke estimates for Rapid City to the AQI indices produced by the EPA on a year to year basis. Also, we pull historical PM2.5 and O3 levels to use in the AgTFP model (detailed below in Extension). Step by step process for the data requests are found in ```./code/2.EPA_data_acquisition.ipynb``` and the final EPA data is found in ```./data/final_EPA_data.csv```
+Next, we request data from the US Environmental Protection Agency (EPA) Air Quality Service (AQS) [API](https://aqs.epa.gov/aqsweb/documents/data_api.html), which is a historical API that provides data on the Air Quality Index (AQI) statistic. Information on how this statistic is calculate can be found [here](https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf). The EPA reports that they only started broad based monitoring with standardized quality assurance procedures in the 1980's. Some [additional information on the Air Quality System can be found in the EPA FAQ](https://www.epa.gov/outdoor-air-quality-data/frequent-questions-about-airdata) on the system. We pull this data with the intention of comparing the previously computed smoke estimates for Rapid City to the AQI indices produced by the EPA on a year to year basis. Also, we pull historical [PM2.5](https://www.epa.gov/air-trends/particulate-matter-pm25-trends) and [O3](https://www.epa.gov/air-trends/ozone-trends) levels to use in the AgTFP model (detailed below in Extension). Step by step process for the data requests are found in ```/code/2.EPA_data_acquisition.ipynb``` and the final EPA data is found in ```/data/final_EPA_data.csv```
 
 We then create a model to find a unique wildfire smoke estimate, a single number to represent the effect and impact of the fire smoke that affects Rapid City every year. While smoke impact should generally be considered the health, tourism, economic or other social problems that result from the smoke, we create the annual estimate of wildfire smoke using the following model: 100*(Square miles burned)^2 / (Distance from Rapid City)
 
-Then, we use this estimate to develop a predictive model based on the fire data and smoke estimate for Rapid City, SD. The model, a polynomial regression of degree 2, is then used to predict smoke estimates for every year for the next 25 years (i.e., 2024-2049), and the resulting fit and the associated confidence interval are both explored. Detailed description and parameters of both the estimate and the predictive model can be found in ```./code/3.smoke_estimate_viz.ipnyb```. Finally, we use all of the gathered data to illustrate some wildfire trends over time in Rapid City, South Dakota. These are detailed below, and code on how these visualization were produce can be found in ```./code/3.smoke_estimate_viz.ipynb```. The final outputs and their detailed descriptions can be found in ```./docs/reflection.pdf```.
+Then, we use this estimate to develop a predictive model based on the fire data and smoke estimate for Rapid City, SD. The model, a polynomial regression of degree 2, is then used to predict smoke estimates for every year for the next 25 years (i.e., 2024-2049), and the resulting fit and the associated confidence interval are both explored. Detailed description and parameters of both the estimate and the predictive model can be found in ```/code/3.smoke_estimate_viz.ipnyb```. Finally, we use all of the gathered data to illustrate some wildfire trends over time in Rapid City, South Dakota. These are detailed below, and code on how these visualization were produce can be found in ```/code/3.smoke_estimate_viz.ipynb```. The final outputs and their detailed descriptions can be found in ```/docs/reflection.pdf```.
 
 #### Extension
 
-The aforementioned general analysis serves as the basis for the agriculture industry-specific model that is produced in ```./code/4.agTFP_Model.ipnyb```. In this, we pull historical Agricultural TFP data in South Dakota to serve as training data for the predictive model from the [USDA](https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-u-s/), which also details how the statistic is calculated. This data is used in an ARIMA model to forecast the expected AgTFP till the year 2050. We then use the previously gathered PM2.5 and O3 data, as well as the previously gathered fire acreage and distance calculations, to create a RandomForestRegressor model to predict the actual AgTFP till the year 2050 in response to changes in the four variables (PM2.5, O3, fire size, fire distance). 
+The aforementioned general analysis serves as the basis for the agriculture industry-specific model that is produced in ```/code/4.agTFP_Model.ipnyb```. In this, we pull historical Agricultural TFP data in South Dakota to serve as training data for the predictive model from the [USDA](https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-u-s/), which also details how the statistic is calculated. This data is used in an ARIMA model to forecast the expected AgTFP till the year 2050. We then use the previously gathered PM2.5 and O3 data, as well as the previously gathered fire acreage and distance calculations, to create a [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) model to predict the actual AgTFP till the year 2050 in response to changes in the four variables (PM2.5, O3, fire size, fire distance). To do so, the four variables were extrapolated into the future based on their previous behavior to act as input to the model between years 2021-2050.
 
 ## Files 
 
@@ -47,41 +47,53 @@ The aforementioned general analysis serves as the basis for the agriculture indu
 
 ```final_EPA_data.csv```
 - We use the EPA AQI API to find monitoring stations near Rapid City, South Dakota, and then extract the average Air Quality Index for each station. The results are then averaged and stored to represent the AQI for each year.
+- We also extract the yearly average PM2.5 and O3 levels.
 - Note that AQI data is only available for Rapid City during and after the year 1985.
+
+```agtfp_data.csv```
+- Historical yearly Agricultural TFP levels for South Dakota pulled from the [USDA](https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-u-s/) website.
+- As per the website, "USDA's Economic Research Service (ERS) has constructed accounts for the farm sector consistent with a gross output model of production (see Shumway et al. 2017, Ball et al. 2016). Output is defined as gross production leaving the farm, as opposed to real value added. Inputs are not limited to labor and capital but include intermediate inputs as well. Intermediate goods produced and consumed within the farm are self-cancelling transactions and, therefore, do not enter either output or input accounts."
+- Specific details on the how the AgTFP is calculated [here](https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-u-s/methods/).
 
 #### ./code/
 
-```USGS_data_acquisition.ipnyb```
+```1.USGS_data_acquisition.ipnyb```
 - This notebook details all code needed to produce ```data/final_USGS_data.csv```.
 
-```EPA_data_acquisition.ipynb```
+```2.EPA_data_acquisition.ipynb```
 - This notebook details all code needed to produce ```data/final_EPA_data.csv```.
-- Note that AQI data is only available for Rapid City during and after the year 1985.
+- Note that AQI, PM2.5, and O3 data is only available for Rapid City during and after the year 1985.
 
-```smoke_estimate_viz.ipynb```
+```3.smoke_estimate_viz.ipynb```
 - This notebook creates a unique smoke estimate for each year, and employs a quadratic regression model to predeict the future smoke estimate up to the year 2049. We also perform a brief visual exploration with all our gathered data-- specifically, we produce:
 - a histogram showing the number of fires occurring every 50 mile distance from Rapid City
 - a time series graph of total acres burned per year for the fires occurring within 1250 miles of Rapid City
 - a time series graph containing the fire smoke estimate for Rapid City compared to the AQI estimate
 
-```agtfp_prediction.ipynb```
-- Blah bdkhskjh dskjfh dskjfh s
-- fhskjfhs
-- fhkwejfhewkjfhewf wekjfhewf ewfh ewkjfh doqwiurewhf bds vndvpfovehwiuf dwqbcds.
-
-#### ./figs/
+```4.agtfp_prediction.ipynb```
+- This notebook details all code needed to produce both the forecasting and predictive AgTFP models.
+- All results from these findings are detailed in ```docs/final_report.pdf```.
+- Produces ```docs/agTFP_model_results.png```.
 
 #### ./docs/
+
 This directory contains the necessary .PDF submissions for this course project.
-```USGS_data_acquisition.ipnyb```
-- This notebook details all code needed to produce ```data/final_USGS_data.csv```.
-- ```USGS_data_acquisition.ipnyb```
-- This notebook details all code needed to produce ```data/final_USGS_data.csv```.
+
+```reflection.pdf```
+- Common analysis reflection. Contains all figures produced in ```3.smoke_estimate_viz.ipynb```.
+
+- ```final_report.pdf```
+- Findings of this exploration. Results also detailed below.
+
+#### Results
+
 
 ## Special Considerations and Limitations
 - It takes ~1 hour to run all the notebooks in this repo and load all necessary data.
-- The EPA only has AQI data available for Rapid City, SD during and after the year 1985.
-- The predictive model (quadratic regression) produced in ```./code/smoke_estimate_viz.ipnyb``` is highly uncertain and likely not representative of the next 25 years.
+- The EPA only has AQI, PM2.5, and O3 data available for Rapid City, SD during and after the year 1985.
+- The predictive model (quadratic regression) produced in ```/code/3.smoke_estimate_viz.ipnyb```, forecast model (ARIMA) produced in ```/code/4.agTFP_model.ipnyb```, and predictive model (RandomForestRegressor) are all highly uncertain and likely not exactly representative of the next 25 years. Models of this nature are always prone to some degree of uncertainty, and their results should therefore be taken lightly.
+- Data extrapolation always holds some level of risk. The four variables used in the predictive ensemble model were all extrapolated nearly 30 years into the future (methods detailed in ```/code/4.agTFP_model.ipnyb```) to then predict the associated AgTFP, which could never be 100% representative of what the true values of these variables will be.
+- There is a varying level of granularity in the data sources used in this exploration, with the AgTFP metrics existing only at the state (South Dakota) level, rather than the city level. This of course implies that the results are likely more general to the larger area surrounding Rapid City. 
 - Fire perimeter estimates are still a work in progress, and likely are not 100% accurate.
-- Add more fnerfierfr fref
+- It's important to consider the difference in the type of smoke produced by different types of wildfires (such as prescribed fires), which was not handled in this exploration.
 
