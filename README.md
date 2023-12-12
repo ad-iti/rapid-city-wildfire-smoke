@@ -30,7 +30,7 @@ Then, we use this estimate to develop a predictive model based on the fire data 
 
 ## Files 
 
-#### data
+#### ./data/
 
 ```USGS_Wildland_Fire_Combined_Dataset.json```
 *This dataset is not stored in this repo because it is too large, but is detailed and linked below.*
@@ -43,7 +43,7 @@ Then, we use this estimate to develop a predictive model based on the fire data 
 - We use the EPA AQI API to find monitoring stations near Rapid City, South Dakota, and then extract the average Air Quality Index for each station. The results are then averaged and stored to represent the AQI for each year.
 - Note that AQI data is only available for Rapid City during and after the year 1985.
 
-#### code
+#### ./code/
 
 ```USGS_data_acquisition.ipnyb```
 - This notebook details all code needed to produce ```data/final_USGS_data.csv```.
@@ -63,8 +63,14 @@ Then, we use this estimate to develop a predictive model based on the fire data 
 - fhskjfhs
 - fhkwejfhewkjfhewf wekjfhewf ewfh ewkjfh doqwiurewhf bds vndvpfovehwiuf dwqbcds.
 
-#### final_report.pdf
-This file contains fhiewuf ewufhwe feufhwe adqpodwefwb f cbsdhwfewuf we.
+#### ./figs/
+
+#### ./docs/
+This directory contains the necessary .PDF submissions for this course project.
+```USGS_data_acquisition.ipnyb```
+- This notebook details all code needed to produce ```data/final_USGS_data.csv```.
+- ```USGS_data_acquisition.ipnyb```
+- This notebook details all code needed to produce ```data/final_USGS_data.csv```.
 
 ## Special Considerations and Limitations
 - It takes ~1 hour to run all the notebooks in this repo and load all necessary data.
