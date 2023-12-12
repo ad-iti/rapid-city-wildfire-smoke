@@ -100,9 +100,9 @@ Blah blahdhbdaldh k bjhfdsb cdsjhpweid sdcbds osiwei cuewhc cnwcnd cdb ijweoeu. 
 
 ## Special Considerations and Limitations
 - It takes ~1 hour to run all the notebooks in this repo and load all necessary data.
-- The EPA only has AQI, PM2.5, and O3 data available for Rapid City, SD during and after the year 1985.
+- The EPA only has AQI data available for Rapid City, SD during and after the year 1985.
 - The predictive model (quadratic regression) produced in ```/code/3.smoke_estimate_viz.ipnyb```, forecast model (ARIMA) produced in ```/code/4.agTFP_model.ipnyb```, and predictive model (RandomForestRegressor) are all highly uncertain and likely not exactly representative of the next 25 years. Models of this nature are always prone to some degree of uncertainty, and their results should therefore be taken lightly.
-- Data extrapolation always holds some level of risk. The four variables used in the predictive ensemble model were all extrapolated nearly 30 years into the future (methods detailed in ```/code/4.agTFP_model.ipnyb```) to then predict the associated AgTFP, which could never be 100% representative of what the true values of these variables will be.
+- Data extrapolation always holds some level of risk. The three variables used in the predictive ensemble model were all extrapolated nearly 30 years into the future (methods detailed in ```/code/4.agTFP_model.ipnyb```) to then predict the associated AgTFP, which could never be 100% representative of what the true values of these variables will be.
 - There is a varying level of granularity in the data sources used in this exploration, with the AgTFP metrics existing only at the state (South Dakota) level, rather than the city level. This of course implies that the results are likely more general to the larger area surrounding Rapid City. 
 - Fire perimeter estimates are still a work in progress, and likely are not 100% accurate.
 - It's important to consider the difference in the type of smoke produced by different types of wildfires (such as prescribed fires), which was not handled in this exploration.
